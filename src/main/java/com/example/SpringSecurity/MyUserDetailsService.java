@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
@@ -21,6 +23,10 @@ public class MyUserDetailsService implements UserDetailsService {
             System.out.println("User not found");
             throw new UsernameNotFoundException("user not found");
         }
-        return new UserPrincipal(user);
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(), // This should be the hashed password
+                new ArrayList<>()
+        );
     }
 }
